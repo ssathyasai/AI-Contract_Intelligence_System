@@ -138,38 +138,20 @@ st.header("Step 1 — Upload Contract")
 
 col_upload, col_options = st.columns([3, 2], gap="large")
 
-SAMPLE_TEXT = (
-    "This Agreement is entered into as of January 1, 2024. "
-    "Payment shall be made within 30 days of invoice. "
-    "Either party may terminate this agreement with 60 days written notice. "
-    "All confidential information shall remain strictly private. "
-    "The total liability shall not exceed the contract value. "
-    "The employee agrees not to compete for a period of 2 years."
-)
-
-SAMPLES = {
-    "— Sample contract (multi-clause) —": SAMPLE_TEXT,
-    "Payment clause":         "Payment shall be made within 30 days of invoice receipt. The fee is non-refundable once remitted.",
-    "Termination clause":     "Either party may terminate this agreement with 60 days written notice. Termination shall not affect accrued rights.",
-    "Confidentiality clause": "All shared information shall be kept confidential for 5 years. Disclosure to third parties is prohibited.",
-    "Liability clause":       "Total liability under this agreement shall not exceed 10000 dollars. Indirect damages are excluded.",
-    "Non-Compete clause":     "Employee agrees not to work for competing firms for 2 years after termination. Solicitation is also restricted.",
-}
-
 with col_upload:
     uploaded_file = st.file_uploader("Upload Contract (.txt)", type=["txt"])
-    sample_choice = st.selectbox("Or choose a sample:", list(SAMPLES.keys()))
 
     if uploaded_file is not None:
         raw_text = uploaded_file.read().decode("utf-8", errors="ignore")
         st.success(f"✅ Uploaded: **{uploaded_file.name}** ({len(raw_text)} chars)")
     else:
-        raw_text = SAMPLES[sample_choice]
+        raw_text = ""
 
-    st.markdown("**Or paste / edit contract text below:**")
+    st.markdown("**Or paste contract text below:**")
     contract_text = st.text_area(
         label="contract_input",
         value=raw_text,
+        placeholder="Paste your contract text here…",
         height=220,
         label_visibility="collapsed",
     )
